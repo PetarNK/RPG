@@ -24,9 +24,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Monster\" />
-    <Folder Include="Models\Player\" />
-  </ItemGroup>
-
 </Project>
