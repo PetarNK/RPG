@@ -102,63 +102,71 @@ namespace RPG
 
                 while (remainingPoints > 0)
                 {
-                    Console.WriteLine($"Remaining Points: {remainingPoints}");
-                    Console.Write("Add to Strength: ");
-                    int strengthPoints = int.Parse(Console.ReadLine());
-                    remainingPoints -= strengthPoints;
-                    if (remainingPoints < 0)
+                    try
                     {
-                        strengthPoints = 0;
-                        remainingPoints = 3;
-                        Console.WriteLine("Too many points allocated. Try again.");
+
+                        Console.WriteLine($"Remaining Points: {remainingPoints}");
+                        Console.Write("Add to Strength: ");
+                        int strengthPoints = int.Parse(Console.ReadLine());
+                        remainingPoints -= strengthPoints;
+                        if (remainingPoints < 0)
+                        {
+                            strengthPoints = 0;
+                            remainingPoints = 3;
+                            Console.WriteLine("Too many points allocated. Try again.");
+                        }
+                        else if (remainingPoints <= 3 && remainingPoints > 0)
+                        {
+                            player.Strength += strengthPoints;
+                            player.Setup();
+                        }
+                        else
+                        {
+                            player.Strength += strengthPoints;
+                            player.Setup();
+                            continue;
+                        }
+                        Console.WriteLine($"Remaining Points: {remainingPoints}");
+                        Console.Write("Add to Agility: ");
+                        int agilityPoints = int.Parse(Console.ReadLine());
+                        remainingPoints -= agilityPoints;
+                        Console.WriteLine($"Remaining Points: {remainingPoints}");
+                        if (remainingPoints < 0)
+                        {
+                            agilityPoints = 0;
+                            remainingPoints = 3;
+                            Console.WriteLine("Too many points allocated. Try again.");
+                        }
+                        else if (remainingPoints <= 3 && remainingPoints > 0)
+                        {
+                            player.Agility += agilityPoints;
+                            player.Setup();
+                        }
+                        else
+                        {
+                            player.Strength += strengthPoints;
+                            player.Setup();
+                            continue;
+                        }
+                        Console.Write("Add to Intelligence: ");
+                        int intelligencePoints = int.Parse(Console.ReadLine());
+                        remainingPoints -= intelligencePoints;
+                        if (remainingPoints < 0)
+                        {
+                            intelligencePoints = 0;
+                            remainingPoints = 3;
+                            Console.WriteLine("Too many points allocated. Try again.");
+                        }
+                        else if (remainingPoints <= 3 && remainingPoints >= 0)
+                        {
+                            player.Intelligence += intelligencePoints;
+                            player.Setup();
+                            continue;
+                        }
                     }
-                    else if (remainingPoints <= 3 && remainingPoints > 0)
+                    catch(FormatException ex) 
                     {
-                        player.Strength += strengthPoints;
-                        player.Setup();
-                    }
-                    else
-                    {
-                        player.Strength += strengthPoints;
-                        player.Setup();
-                        continue;
-                    }
-                    Console.WriteLine($"Remaining Points: {remainingPoints}");
-                    Console.Write("Add to Agility: ");
-                    int agilityPoints = int.Parse(Console.ReadLine());
-                    remainingPoints -= agilityPoints;
-                    Console.WriteLine($"Remaining Points: {remainingPoints}");
-                    if (remainingPoints < 0)
-                    {
-                        agilityPoints = 0;
-                        remainingPoints = 3;
-                        Console.WriteLine("Too many points allocated. Try again.");
-                    }
-                    else if (remainingPoints <= 3 && remainingPoints > 0)
-                    {
-                        player.Agility += agilityPoints;
-                        player.Setup();
-                    }
-                    else
-                    {
-                        player.Strength += strengthPoints;
-                        player.Setup();
-                        continue;
-                    }
-                    Console.Write("Add to Intelligence: ");
-                    int intelligencePoints = int.Parse(Console.ReadLine());
-                    remainingPoints -= intelligencePoints;
-                    if (remainingPoints < 0)
-                    {
-                        intelligencePoints = 0;
-                        remainingPoints = 3;
-                        Console.WriteLine("Too many points allocated. Try again.");
-                    }
-                    else if (remainingPoints <= 3 && remainingPoints >= 0)
-                    {
-                        player.Intelligence += intelligencePoints;
-                        player.Setup();
-                        continue;
+                        Console.WriteLine("Invalid choice. The choice must be an integer!");
                     }
 
                 }
@@ -182,13 +190,19 @@ namespace RPG
 
         static void PlayGame()
         {
+            
             int playerX = 1;
             int playerY = 8;
 
             while (true)
             {
+                
                 Console.Clear();
                 MoveMonsters(ref playerX, ref playerY);
+                if (currentScreen == Screen.Exit)
+                {
+                    return;
+                }
                 Console.WriteLine($"Health: {player.Health} Mana: {player.Mana}");
                 DrawGameField(playerX, playerY);
 
@@ -326,9 +340,9 @@ namespace RPG
                     if (player.Health <= 0)
                     {
                         Console.WriteLine("You have been defeated. Game over.");
-                        Console.ReadKey();
                         currentScreen = Screen.Exit;
-                        break;
+                        Console.ReadKey();
+                        return;
                     }
                 }
                 if (monster.X < playerX - 1) monster.X++;
