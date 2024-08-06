@@ -263,7 +263,7 @@ namespace RPG.Services.GameService
                     }
                     catch (FormatException e)
                     {
-                        Console.WriteLine("Invalid choice. The choice must be an integer!");
+                        Console.WriteLine("Invalid choice. The choice must be an integer!", e);
                     }
 
                 }

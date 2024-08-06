@@ -118,7 +118,7 @@ namespace RPG.Services.CharacterService
                     }
                     catch (FormatException ex)
                     {
-                        Console.WriteLine("Invalid choice. The choice must be an integer!");
+                        Console.WriteLine("Invalid choice. The choice must be an integer!", ex);
                     }
 
 
