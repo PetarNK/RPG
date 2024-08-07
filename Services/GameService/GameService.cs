@@ -35,7 +35,6 @@ namespace RPG.Services.GameService
                     case Screen.CharacterSelect:
                         player = _characterService.CharacterSelect();
                         _characterService.AllocateBonusPoints(player);
-                        SavePlayerToDatabase(player);
                         currentScreen = Screen.InGame;
                         break;
                     case Screen.InGame:
@@ -64,7 +63,8 @@ namespace RPG.Services.GameService
                         Strength = player.Strength,
                         Agility = player.Agility,
                         Intelligence = player.Intelligence,
-                        CreatedAt = DateTime.Now
+                        CreatedAt = DateTime.Now,
+                        HighScore = player.HighScore
                     });
                     _gameContext.SaveChanges();
                 }
@@ -215,6 +215,8 @@ namespace RPG.Services.GameService
                     player.Health -= monster.Damage;
                     if (player.Health <= 0)
                     {
+                        SavePlayerToDatabase(player);
+                        Console.Clear();
                         Console.WriteLine("You have been defeated. Game over.");
                         currentScreen = Screen.Exit;
                         Console.ReadKey();
@@ -256,7 +258,7 @@ namespace RPG.Services.GameService
                     try
                     {
                         int choice = int.Parse(Console.ReadLine()) - 1;
-                        if (choice < 0 || choice > targets.Count)
+                        if (choice < 0 || choice >= targets.Count)
                         {
                             Console.WriteLine("Invalid choice, please choose a correct option for monster to be attacked!");
                             continue;
@@ -267,6 +269,7 @@ namespace RPG.Services.GameService
                         if (targets[choice].Health <= 0)
                         {
                             monsters.Remove(targets[choice]);
+                            player.HighScore++;
                         }
                         break;
                     }

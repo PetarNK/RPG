@@ -10,6 +10,7 @@ namespace RPG.Models.Player
         public int Strength { get; set; }
         public int Agility { get; set; }
         public int Intelligence { get; set; }
+        public int HighScore { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }

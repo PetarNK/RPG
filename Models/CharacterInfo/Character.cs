@@ -17,6 +17,8 @@ namespace RPG.Models.CharacterInfo
         public int Range { get; set; }
         public char Symbol { get; set; }
 
+        public int HighScore { get; set; }
+
         public virtual void Setup()
         {
             this.Health = this.Strength * 5;
