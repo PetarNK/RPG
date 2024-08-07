@@ -8,6 +8,8 @@ namespace RPG.Data
 {
     public class Config
     {
+        //Change connection string here.
+
         public const string ConnectionString = @"Server=localhost;Database=RPG;Integrated Security=true;";
     }
 }

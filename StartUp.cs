@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using RPG.Data;
 using RPG.Services.GameService;
 using RPGGame.Services.Hosting;
 
@@ -10,7 +9,8 @@ namespace RPG
 
         static void Main(string[] args)
         {
-
+            //Before using the app, please change the connection string in Data\Config.cs. with your database connection string!
+            
             var host = HostBuilderExtensions.CreateHostBuilder(args).Build();
 
             using (var scope = host.Services.CreateScope())
