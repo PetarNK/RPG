@@ -1,4 +1,5 @@
-﻿using RPG.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using RPG.Data;
 using RPG.Menu;
 using RPG.Models.CharacterInfo;
 using RPG.Models.Monster;
@@ -51,17 +52,25 @@ namespace RPG.Services.GameService
             Console.ReadKey();
             currentScreen = Screen.CharacterSelect;
         }
+        
         private void SavePlayerToDatabase(Character player)
         {
+            try
             {
-                _gameContext.Players.Add(new Player
+                _gameContext.Database.EnsureCreated();
                 {
-                    Strength = player.Strength,
-                    Agility = player.Agility,
-                    Intelligence = player.Intelligence,
-                    CreatedAt = DateTime.Now
-                });
-                _gameContext.SaveChanges();
+                    _gameContext.Players.Add(new Player
+                    {
+                        Strength = player.Strength,
+                        Agility = player.Agility,
+                        Intelligence = player.Intelligence,
+                        CreatedAt = DateTime.Now
+                    });
+                    _gameContext.SaveChanges();
+                }
+            } catch (Exception ex) 
+            {
+                Console.WriteLine(ex);
             }
         }
         private void PlayGame(ref Screen currentScreen, Character player, List<Monster> monsters, Random random)

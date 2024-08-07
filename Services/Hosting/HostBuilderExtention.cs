@@ -17,5 +17,6 @@ namespace RPGGame.Services.Hosting
                             options.UseSqlServer(Config.ConnectionString))
                         .AddScoped<ICharacterService, CharacterService>()
                         .AddScoped<IGameService, GameService>());
+
     }
 }
