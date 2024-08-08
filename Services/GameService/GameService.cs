@@ -218,11 +218,15 @@ namespace RPG.Services.GameService
                         SavePlayerToDatabase(player);
                         Console.Clear();
                         Console.WriteLine("You have been defeated. Game over.");
-                        if (player.HighScore > 1)
+                        if (player.HighScore > 1 || player.HighScore == 0)
                         {
-                        Console.WriteLine($"Your highscore is: {player.HighScore} monsters defeated");
+                            Console.WriteLine($"Your highscore is: {player.HighScore} monsters defeated");
 
-                        }else { Console.WriteLine($"Your highscore is: {player.HighScore} monster defeated"); }
+                        }
+                        else 
+                        { 
+                            Console.WriteLine($"Your highscore is: {player.HighScore} monster defeated"); 
+                        }
                         currentScreen = Screen.Exit;
                         Console.ReadKey();
                         return currentScreen;

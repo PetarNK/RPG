@@ -12,7 +12,7 @@ using RPG.Data;
 namespace RPG.Migrations
 {
     [DbContext(typeof(GameContext))]
-    [Migration("20240806230609_InitialMigration")]
+    [Migration("20240808083655_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,9 @@ namespace RPG.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("HighScore")
+                        .HasColumnType("int");
 
                     b.Property<int>("Intelligence")
                         .HasColumnType("int");

@@ -36,6 +36,9 @@ namespace RPG.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("HighScore")
+                        .HasColumnType("int");
+
                     b.Property<int>("Intelligence")
                         .HasColumnType("int");
 
